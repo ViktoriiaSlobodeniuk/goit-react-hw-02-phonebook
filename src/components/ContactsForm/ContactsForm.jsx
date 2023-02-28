@@ -1,5 +1,7 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Field } from 'formik';
 import * as yup from 'yup';
+import { Form, Label, Button, ErrorMessage } from './ContactsForm.styled';
+import PropTypes from 'prop-types';
 
 const patternName =
   "^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$";
@@ -23,7 +25,6 @@ const initialValues = {
 
 export const ContactsForm = ({ onSubmit }) => {
   const handleSubmit = (values, { resetForm }) => {
-    console.log(values);
     onSubmit(values.name, values.number);
     resetForm();
   };
@@ -34,20 +35,24 @@ export const ContactsForm = ({ onSubmit }) => {
       onSubmit={handleSubmit}
       validationSchema={schema}
     >
-      <Form>
-        <label htmlFor="name">
+      <Form autoComplete="off">
+        <Label htmlFor="name">
           Name
           <Field type="text" name="name" />
           <ErrorMessage name="name" component="div" />
-        </label>
-        <br />
-        <label htmlFor="number">
+        </Label>
+
+        <Label htmlFor="number">
           Number
           <Field type="tel" name="number" />
           <ErrorMessage name="number" component="div" />
-        </label>
-        <button type="submit">Add Contact</button>
+        </Label>
+        <Button type="submit">Add Contact</Button>
       </Form>
     </Formik>
   );
+};
+
+ContactsForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
 };
